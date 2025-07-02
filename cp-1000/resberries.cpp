@@ -1,92 +1,45 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
+#include <climits>
 using namespace std;
 
-int main() {
-
+int main()
+{
     int t;
-    cin>>t;
-    while(t--){
-        int n,k;
-        cin>>n>>k;
-        vector<int>v(n);
-        int cnt1 = 0;
-        for(int i = 0;i<n;i++){
-            cin>>v[i];
-            if (v[i] == 1)
-                cnt1++;
+    cin >> t;
+    while (t--)
+    {
+        int n, k;
+        cin >> n >> k;
+        vector<int> a(n);
+        for (int i = 0; i < n; i++)
+            cin >> a[i];
+
+        long long ans = INT_MAX;
+        long long even_count = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] % 2 == 0)
+                even_count++;
+            if (a[i] % k == 0)
+                ans = 0;
+            else
+                ans = min(ans, (long long)(k - a[i] % k));
         }
 
-        if(k == 2){
-            bool flag = false;
-            for(int ele:v){
-                if(ele%2 == 0){
-                    cout<<0;
-                    flag = true;
-                    break;
-                }
-            }
-            if(!flag){
-                cout<<1;
-                
-            }
+        if (k == 4)
+        {
+            if (even_count >= 2)
+                ans = min(ans, 0LL);
+            else if (even_count == 1)
+                ans = min(ans, 1LL);
+            else if (even_count == 0)
+                ans = min(ans, 2LL);
         }
-        else if(k == 3){
-            bool flag = false;
-            int res = 2;
-            for (int ele : v)
-            {
-                if (ele % 3 == 0)
-                {
-                    cout << 0;
-                    flag = true;
-                    break;
-                }
-                res = min(res, 3 - ele % 3);
-            }
-            if (!flag)
-                cout << res;
-        }
-        else if(k == 4){
-            int res = 3;
-            bool flag = false;
-            for (int ele : v)
-            {
-                if (ele % 4 == 0)
-                {
-                    cout << 0;
-                    flag = true;
-                    break;
-                }
-                res = min(res, 4 - ele % 4);
-                
-            }
-            if (cnt1 >= 2)
-            {
-                res = min(res, 2);
-            }
-            if (!flag)
-                cout << res;
-        }
-        else{
-            int res = 4;
-            bool flag = false;
-            for(int ele:v){
-                if(ele % 5 == 0 ){
-                    cout<<0;
-                    flag = true;
-                    break;
-                    
-                }
-                res = min(res, 5 - ele % 5);
-            }
-            if(!flag)cout<<res;
-            
 
-        }
-        cout<<endl;
+        cout << ans << endl;
     }
     return 0;
 }
