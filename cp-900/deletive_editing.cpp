@@ -1,45 +1,36 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
+int main()
+{
 
-int main(){
    int t;
-   cin>>t;
-   while(t--){
-      string s,temp;
-      cin>>s;
-      cin>>temp;
+   cin >> t;
+   while (t--)
+   {
+      string s, t, ans = "";
+      cin >> s >> t;
+      int a[30], i;
+      memset(a, 0, sizeof(a));
+      for (i = 0; i < t.size(); i++)
+      {
+         int x = t[i] - 'A';
+         a[x]++;
+      }
 
-      if(s == temp ){
-         cout<<"YES"<<endl;
-         continue;
-      }
-      unordered_set<char>st;
-      if(s.size() < temp.size()){
-         cout<<"NO"<<endl;
-         continue;
-      }
-      for(char ch:temp)st.insert(ch);
-      int i = 0;
-      int j = 0;
-      while(i < s.size() && j < temp.size()){
-         if(s[i] == temp[j]){
-            j++;
+      for (i = s.size() - 1; i >= 0; i--)
+      {
+         int x = s[i] - 'A';
+         if (a[x])
+         {
+            ans += s[i];
+            a[x]--;
          }
-         i++;
       }
-      if(j < temp.size()){
-         cout<<"NO"<<endl;
-         continue;
-      }
-      bool flag = true;
-      while(i < s.size()){
-         if(st.find(s[i]) != st.end()){
-            flag = false;
-            break;
-         }
-         i++;
-      }
-      if(flag)cout<<"YES"<<endl;
-      else cout<<"No"<<endl;
+      reverse(ans.begin(), ans.end());
+      if (ans == t)
+         cout << "YES" << endl;
+      else
+         cout << "NO" << endl;
    }
+   return 0;
 }
